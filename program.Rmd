@@ -1,0 +1,158 @@
+---
+title: "TUTORIAL OLAH GAMBAR LANJUTAN DENGAN RSTUDIO"
+author: "Muhammad Hilmy Ghilmany"
+date: "2/15/2021"
+output:
+  html_document:
+      theme: flat
+      highlight: espresso
+      toc: true
+      toc_float:
+        collapsed: true
+        smooth_scroll: true
+      number_sections: false
+---
+# Mengatur Lokasi Kerja
+
+Langkah pertama adalah engatur lokasi kerja dengan cara membuka folder kerja melalui explorer, dan menyalin lokasi folder
+Maka akan berupa seperti ini :
+
+(C:\Users\windows x\Documents\OlahGambarLanjutan)
+Dan jika kita setwd dengan direktori tersebut maka akan muncul eror seperti ini :
+(Error: '\ M' is an unrecognized escape in character string starting ""D:\ M")
+Oleh sebab itu, kita harus mengganti "\" dengan "/"
+
+```{r}
+setwd("C:/Users/windows x/Documents/OlahGambarLanjutan")
+```
+
+# Instal Package
+
+Kita harus menginstall Package agar bisa berjalan lancar, jika sudah bisa dilewati step ini
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("EBImage")
+```
+
+# Memanggil Package
+
+Kita harus memanggil library EBImage setiap kali kita membutuhkan gambar, dengan code :
+
+```{r}
+library(EBImage)
+```
+
+# Membaca, Menampilkan dan Memberi Teks Gambar
+## Membaca Gambar
+Kita dapat membaca gambar yang berada pada file kita dengan cara, memasukkan gambar kita kedalam folder projek kita, dan untuk format yang support pada EBImage adalah JPG, PNG, dan TIFF. Kita dapat membaca gambar kita dan memasukkan kedalam variable img
+
+```{r}
+setwd("C:/Users/windows x/Documents/OlahGambarLanjutan")
+library(EBImage)
+img <- readImage('foto.jpeg')
+```
+
+## Menampilkan Gambar
+Setelah terbaca, maka langkah selanjutnya adalah menampilkan gambar dengan cara menampilkan variabel img tadi, selain itu kita juga dapat menambahkan method browser pada saat menampilkan gambar, sehingga gambar yang kita tampilkan akan dapat diperbesar dan diperkecil
+
+```{r}
+display(img, method="browser")
+```
+
+## Memberi Teks Pada Gambar
+Kita juga dapat menambahkan tulisan pada gambar kita dengan cara
+
+```{r}
+display(img, method="raster")
+text(x = 20, y = 20, label = "Banyak Amat Tugas", adj = c(0,1), col = "yellow", cex = 2)
+```
+
+# Memanipulasi Gambar
+Kita juga dapat membuat gambar kita berefek negatif, seperti contoh
+
+```{r}
+img_neg = max(img) - img
+display( img_neg )
+```
+
+# Transformasi Gambar
+## Transpose
+Kita dapat mentranspose gambar kita dengan cara
+
+```{r}
+img_t = transpose(img)
+display( img_t )
+```
+
+## Translate
+Kita dapat membuat gambar kita keluar diperkecil dan ruang yang kosong akan diisi oleh background
+
+```{r}
+img_translate = translate(img, c(100,-50))
+display(img_translate)
+```
+
+## Memutar Gambar
+Kita juga dapat memutar gambar, misalnya saja sekarang ini kita akan memutar gambar kita 45 derajat
+
+```{r}
+img_rotate = rotate(img, 30, bg.col = "white")
+display(img_rotate)
+```
+
+
+## Resize
+Kita juga dapat mengatur ukuran gambar kita sesuka hati kita
+
+```{r}
+img_resize = resize(img, w=256, h=256)
+display(img_resize)
+```
+
+## Flip dan Flop
+Kita dapat memutar gambar kita 90 derajat
+
+```{r}
+img_flip = flip(img)
+img_flop = flop(img)
+
+display(combine(img_flip, img_flop), all=TRUE)
+```
+
+# Filtering
+Kita dapat memberi filter pada gambar kita dengan cara
+
+```{r}
+w = makeBrush(size = 31, shape = 'gaussian', sigma = 5)
+plot(w[(nrow(w)+1)/2, ], ylab = "w", xlab = "", cex = 0.7)
+img_flo = filter2(img, w)
+display(img_flo)
+```
+
+Dapat juga dengan cara
+
+```{r}
+fhi = matrix(1, nrow = 3, ncol = 3)
+fhi[2, 2] = -8
+img_fhi = filter2(img, fhi)
+display(img_fhi)
+```
+
+# Morpologhical Operations
+Kita dapat menambahkan rasio putih pada tulisan hitam putih maupun mengurangi
+Erosi = mengurangi rasio putih
+dilatasi = menambah rasio putih
+
+```{r}
+shapes <- readImage('ebimage.png')
+display(shapes)
+```
+```{r}
+kern = makeBrush(5, shape='diamond')
+shapes_erode= erode(shapes, kern)
+shapes_dilate = dilate(shapes, kern)
+display(combine(shapes_erode, shapes_dilate), all=TRUE)
+```
