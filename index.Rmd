@@ -1,0 +1,31 @@
+---
+title: "Selamat Datang"
+output:   
+    html_document:
+      theme: flat
+      highlight: espresso
+---
+
+Pembelajaran Cara Olah Gambar Lanjutan Menggunakan RStudio
+
+Atas Bimbingan 
+
+Prof. Dr. Suhartono, M.Kom
+
+Selaku Dosen Linier Algebra UIN Malang
+
+Dan beberapa sumber diantara lain :
+
+1. http://bioconductor.org/packages/release/bioc/vignettes/EBImage/inst/doc/EBImage-introduction.html
+
+2. http://www.socr.umich.edu/people/dinov/courses/DSPA_notes/DSPA_Appendix_6_ImageFilteringSpectralProcessing.html#73_Morphological_operations
+
+# Pengertian EBImage
+
+![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTssnkKXIdtmIjgl87fSwFcHb_ySlLlh_HIfg&usqp=CAU)
+
+EBImage menyediakan fungsionalitas tujuan umum untuk pemrosesan dan analisis gambar. Dalam konteks pengujian seluler berbasis mikroskop (high-throughput), EBImage menawarkan alat untuk menyegmentasikan sel dan mengekstrak deskriptor seluler kuantitatif. 
+
+Hal ini memungkinkan otomatisasi tugas tersebut menggunakan bahasa pemrograman R dan memfasilitasi penggunaan alat lain di lingkungan R untuk pemrosesan sinyal, pemodelan statistik, pembelajaran mesin, dan visualisasi dengan data gambar.
+
+Silahkan Tekan Tab Materi Kanan Atas :)
